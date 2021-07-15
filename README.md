@@ -30,6 +30,7 @@ python3 main.py
 	3. 在bilibili.com > Cookie 下找到SESSDATA字段
 		![获取cookie](/images/getCookies3.jpg "获取cookie")
 		![获取cookie](/images/getCookies4.jpg "获取cookie")
+		
 		***切记 将SESSDATA泄露给他人会导致账号被盗!!***
 3. 确定下载范围
 	在出现漫画详情后, 输入下载范围
