@@ -185,6 +185,8 @@ class Comic:
         self.success = False
 
     def fetch(self):
+        if not os.path.exists('./data'):
+            os.mkdir('./data')
         if os.path.exists(f'./data/{self.id}'):
             if os.path.isdir(f'./data/{self.id}'):
                 shutil.rmtree(f'./data/{self.id}')
