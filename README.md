@@ -7,6 +7,7 @@
 4. 自动合并PDF 并生成Kindle可读的标签
 ## 运行环境
 Python 3.x
+
 在CMD或BASH中执行这行代码安装运行库:```pip3 install -r  requirements.txt```
 
 一般用户可以使用exe版的程序 [Releases · lihe07/bilibili-manga-downloader (github.com)](https://github.com/lihe07/bilibili-manga-downloader/releases)
@@ -21,8 +22,12 @@ python3 main.py
 ### 	1. 获取漫画ID(comicID):
 
 ​		进入漫画详情页(如图)
-​		![漫画详情](/images/info.jpg "漫画详情")(https://manga.bilibili.com/detail/mc25493?from=manga_search)
-​		此时的链接 manga.bilibili.com/detail/mc***25493***?from=manga_search 中的/mc***xxxxx***就是漫画ID
+​		
+
+![漫画详情](/images/info.jpg "漫画详情")(https://manga.bilibili.com/detail/mc25493?from=manga_search)
+​		
+
+此时的链接 manga.bilibili.com/detail/mc***25493***?from=manga_search 中的/mc***xxxxx***就是漫画ID
 
 ### 2. 付费漫画下载 SESSDATA获取
 ​		如果要下载付费漫画, 则需要登录自己的账号, 并输入SESSDATA(免费漫画无需)
@@ -31,13 +36,19 @@ python3 main.py
 
 1. 点击链接框前小锁符号
 	![获取cookie](/images/getCookies1.jpg "获取cookie")
-2. 点击Cookie字段
-	![获取cookie](/images/getCookies2.jpg "获取cookie")
-3. 在bilibili.com > Cookie 下找到SESSDATA字段
-	![获取cookie](/images/getCookies3.jpg "获取cookie")
-	![获取cookie](/images/getCookies4.jpg "获取cookie")
 	
-	***切记 将SESSDATA泄露给他人会导致账号被盗!!***
+	
+	
+2. 点击Cookie字段
+  ![获取cookie](/images/getCookies2.jpg "获取cookie")
+
+  
+
+3. 在bilibili.com > Cookie 下找到SESSDATA字段
+  ![获取cookie](/images/getCookies3.jpg "获取cookie")
+  ![获取cookie](/images/getCookies4.jpg "获取cookie")
+
+  ***切记 将SESSDATA泄露给他人会导致账号被盗!!***
 
 ### 3. 确定下载范围
 ​		在出现漫画详情后, 输入下载范围
