@@ -8,6 +8,9 @@
 ## 运行环境
 Python 3.x
 在CMD或BASH中执行这行代码安装运行库:```pip3 install -r  requirements.txt```
+
+一般用户可以使用exe版的程序 [Releases · lihe07/bilibili-manga-downloader (github.com)](https://github.com/lihe07/bilibili-manga-downloader/releases)
+
 ## 使用方法
 在CMD或BASH中执行这行代码
 ```
