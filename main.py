@@ -273,7 +273,8 @@ class Comic:
         console.print(t)
         _from = requireInt('开始章节(ord): ', False)
         _to = requireInt('结束章节(ord): ', False)
-        assert _from < _to
+        # 允许小于等于才能够下载单章以及输入两个0下载全部
+        assert _from <= _to
 
         # with open('debug.json', 'wb') as f:
         #     f.write(orjson.dumps(data))
@@ -284,15 +285,10 @@ class Comic:
                 # BiliBili漫画索引号是反着的
                 epi = Episode(episode, self.sessdata, self.id)
                 if epi.getAvailable():
-                    if _from:
-                        if epi.ord >= _from:
-                            self.episodes.append(epi)
-                            self.ordTitle[epi.ord] = epi.title
-                    if _to:
-                        if epi.ord <= _to:
-                            self.episodes.append(epi)
-                            self.ordTitle[epi.ord] = epi.title
-
+                    # 直接比较即可，之前的方式会导致预期之外的添加
+                    if _from <= epi.ord <= _to:
+                        self.episodes.append(epi)
+                        self.ordTitle[epi.ord] = epi.title
                     if (not bool(_from)) and (not bool(_to)):
                         self.episodes.append(epi)
                         self.ordTitle[epi.ord] = epi.title
