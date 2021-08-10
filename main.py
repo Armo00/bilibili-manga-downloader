@@ -272,7 +272,13 @@ class Comic:
         self.ordTitle = {}
         console.print(t)
         _from = requireNumber('开始章节(ord): ', False)
+        if _from is None:
+            # 不输入则不限制
+            _from = 0
         _to = requireNumber('结束章节(ord): ', False)
+        if _to is None:
+            # 不输入则不限制
+            _to = 999999999
         # 允许小于等于才能够下载单章以及输入两个0下载全部
         assert _from <= _to
 
