@@ -271,8 +271,8 @@ class Comic:
         self.episodes = []
         self.ordTitle = {}
         console.print(t)
-        _from = requireInt('开始章节(ord): ', False)
-        _to = requireInt('结束章节(ord): ', False)
+        _from = requireNumber('开始章节(ord): ', False)
+        _to = requireNumber('结束章节(ord): ', False)
         # 允许小于等于才能够下载单章以及输入两个0下载全部
         assert _from <= _to
 
@@ -304,9 +304,18 @@ def requireInt(msg, notNull):
             if len(userInput) == 0 and (not notNull):
                 return None
             return int(userInput)
-        except TypeError:
+        except ValueError:
             error('请输入数字...')
 
+def requireNumber(msg, notNull):
+    while 1:
+        userInput = input(msg)
+        try:
+            if len(userInput) == 0 and (not notNull):
+                return None
+            return float(userInput)
+        except ValueError:
+            error('请输入数字...')
 
 if __name__ == '__main__':
     comicID = requireInt('请输入漫画ID:', True)
