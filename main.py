@@ -115,6 +115,9 @@ class Episode:
         payloads = {
             'ep_id': self.id
         }
+        if os.path.exists(self.rootPath + f'/{self.ord}.pdf'):
+            # 相同文件名已经存在 跳过下载
+            return
         rep = requests.post(url, data=payloads, headers=self.headers)
         if rep.ok:
             data = rep.json()
@@ -185,19 +188,22 @@ class Comic:
         self.success = False
 
     def fetch(self):
+        @retry()
+        def mkdir():
+            os.mkdir(f'./data/{self.id}')
         if not os.path.exists('./data'):
             os.mkdir('./data')
         if os.path.exists(f'./data/{self.id}'):
             if os.path.isdir(f'./data/{self.id}'):
-                shutil.rmtree(f'./data/{self.id}')
+                # shutil.rmtree(f'./data/{self.id}')
+                info('存在历史下载 将避免下载相同文件!')
             else:
                 os.remove(f'./data/{self.id}')
+                mkdir()
+        else:
+            mkdir()
 
-        @retry()
-        def mkdir():
-            os.mkdir(f'./data/{self.id}')
 
-        mkdir()
         payload = {"comic_id": self.id}
         with console.status('正在访问BiliBili Manga'):
             rep = requests.post(self.detailUrl, data=payload, headers=self.headers)
