@@ -1,2 +1,4 @@
 data/*
 *.pdf
+.idea/*
+.idea

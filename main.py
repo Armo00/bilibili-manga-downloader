@@ -105,9 +105,13 @@ class Episode:
     @retry(delay=1)
     def downloadImg(self, token, url, index):
         url = url + "?token=" + token
-        file = requests.get(url, headers=self.headers).content
+        file = requests.get(url, headers=self.headers)
+        
         with open(os.path.join(self.rootPath, f"{self.ord}_{index}.jpg"), 'wb') as f:
-            f.write(file)
+            size = f.write(file.content)
+        if size != int(file.headers['content-length']):
+           error(f"下载内容大小不符合预期! 预期大小: {file.headers['content-length']} 实际大小: {size} 1s后重试!")
+           raise Exception
         return os.path.join(self.rootPath, f"{self.ord}_{index}.jpg")
 
     def download(self):
