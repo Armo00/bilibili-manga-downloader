@@ -1,5 +1,8 @@
 # bilibili-manga-downloader
 下载哔哩哔哩漫画的爬虫， 支持范围下载， 逐话导出PDF，自动合并PDF
+
+__GUI版本已经开始制作!__
+
 ## 项目特点
 1. 支持多线程下载
 2. 可自定义下载范围
@@ -8,6 +11,7 @@
 ## 运行环境
 Python 3.x
 在CMD或BASH中执行这行代码安装运行库:```pip3 install -r  requirements.txt```
+
 ## 使用方法
 在CMD或BASH中执行这行代码
 ```
