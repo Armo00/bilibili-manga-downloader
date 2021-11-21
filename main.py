@@ -1,6 +1,5 @@
 import os
 import shutil
-from typing import Any
 from rich import print
 from rich.table import Table
 from rich.console import Console
@@ -9,11 +8,11 @@ import requests
 import datetime
 import time
 from retry import retry
-from jsonpath import jsonpath as jp
 import threading
 import orjson
 import img2pdf
 from PyPDF4 import PdfFileMerger, PdfFileReader
+import hashlib
 
 console = Console()
 
@@ -24,19 +23,19 @@ def _time():
     return "[rgb(102, 102, 153)]%s[/]" % timeStr
 
 
-def info(msg: str) -> None:
+def info(msg):
     timeStr = _time()
     logStr = "%s [b]|[rgb(51, 204, 204)]INFO[/]|[/b] %s" % (timeStr, msg)
     print(logStr)
 
 
-def error(msg: str) -> None:
+def error(msg):
     timeStr = _time()
     logStr = "%s [b]|[rgb(204, 0, 0)]ERROR[/]|[/b] %s" % (timeStr, msg)
     print(logStr)
 
 
-def isInt(a: Any) -> bool:
+def isInt(a):
     try:
         int(a)
         return True
@@ -51,7 +50,7 @@ def ceil(num):
         return num
 
 
-def splitThreads(data: list, num: int):
+def splitThreads(data, num):
     for i in range(ceil(len(data) / num)):
         _from = i * num
 
@@ -105,13 +104,21 @@ class Episode:
     @retry(delay=1)
     def downloadImg(self, token, url, index):
         url = url + "?token=" + token
-        file = requests.get(url, headers=self.headers)
+        file = requests.get(url)
         
+        if file.headers['Etag'] != hashlib.md5(file.content).hexdigest():
+            error(f"下载内容校验和不正确! {file.headers['Etag']} ≠ {hashlib.md5(file.content).hexdigest()}")
+            # raise Exception
+
         with open(os.path.join(self.rootPath, f"{self.ord}_{index}.jpg"), 'wb') as f:
-            size = f.write(file.content)
-        if size != int(file.headers['content-length']):
-           error(f"下载内容大小不符合预期! 预期大小: {file.headers['content-length']} 实际大小: {size} 1s后重试!")
-           raise Exception
+            f.write(file.content)
+
+        # 返回头的ETag正好是文件的md5校验和
+        # 旧的校验方式: 文件大小
+        # if size != int(file.headers['content-length']):
+        #    error(f"下载内容大小不符合预期! 预期大小: {file.headers['content-length']} 实际大小: {size} 1s后重试!")
+        #    raise Exception
+
         return os.path.join(self.rootPath, f"{self.ord}_{index}.jpg")
 
     def download(self):
@@ -265,11 +272,12 @@ class Comic:
         if data['code'] != 0:
             error(f'漫画信息有误! 请仔细检查! (提示信息{data["msg"]})')
             return False
-        self.title = jp(data, '$.data.title')[0]
-        self.authorName = jp(data, '$.data.author_name')[0]
-        self.styles = jp(data, '$.data.styles')[0]
-        self.evaluate = jp(data, '$.data.evaluate')[0]
-        self.total = jp(data, '$.data.total')[0]
+
+        self.title = data['data']['title']
+        self.authorName = data['data']['author_name']
+        self.styles = data['data']['styles']
+        self.evaluate = data['data']['evaluate']
+        self.total = data['data']['total']
         t = Table(title='漫画作品详情')
         t.add_column('[green bold]作品标题[/green bold]')
         t.add_column('[green bold]作者[/green bold]')
