@@ -7,17 +7,25 @@ __GUI版本已经开始制作!__
 1. 支持多线程下载
 2. 可自定义下载范围
 3. 可以导出每一话的PDF文件
-4. 自动合并PDF 并生成Kindle可读的标签
+4. 自动合并PDF 并生成阅读器可读的书签
+
+## 可执行程序
+
+对于一般用户，建议使用打包好的可执行程序。
+
+https://github.com/lihe07/bilibili-manga-downloader/releases/latest
+
 ## 运行环境
 Python 3.x
-在CMD或BASH中执行这行代码安装运行库:```pip3 install -r  requirements.txt```
+在CMD或BASH中执行这行指令:```pip3 install -r  requirements.txt```
 
 ## 使用方法
-在CMD或BASH中执行这行代码
+
+在CMD或BASH中执行
 ```
 python3 main.py
 ```
-执行后按照提示输入参数
+执行后按照提示输入信息
 
 ### 	1. 获取漫画ID(comicID):
 
