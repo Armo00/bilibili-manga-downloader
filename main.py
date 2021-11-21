@@ -9,7 +9,7 @@ import datetime
 import time
 from retry import retry
 import threading
-import orjson
+import json
 import img2pdf
 from PyPDF4 import PdfFileMerger, PdfFileReader
 import hashlib
@@ -88,7 +88,8 @@ class Episode:
         self.id = jsonData['id']
         self.available = not jsonData['is_locked']
         self.ord = jsonData['ord']  # 真正的顺序..
-        self.title = jsonData['title']
+        # 使用short_title作为显示/标注用的标题
+        self.title = jsonData['short_title']
         self.headers = {
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.56',
             'origin': 'https://manga.bilibili.com',
@@ -137,7 +138,7 @@ class Episode:
             for img in images:
                 paths.append(img['path'])
             payloads = {
-                "urls": orjson.dumps(paths).decode()
+                "urls": json.dumps(paths).decode()
             }
             url = "https://manga.bilibili.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web"
 
@@ -267,6 +268,7 @@ class Comic:
         else:
             error('请求错误 / 网络错误!')
             error(f'详细信息: {rep.status_code}')
+            error("请检查输入信息是否正确!")
 
     def analyzeData(self, data):
         if data['code'] != 0:
@@ -301,7 +303,7 @@ class Comic:
         assert _from <= _to
 
         # with open('debug.json', 'wb') as f:
-        #     f.write(orjson.dumps(data))
+        #     f.write(json.dumps(data))
         with console.status('正在解析详细章节...'):
             epList = data['data']['ep_list']
             epList.reverse()
@@ -347,3 +349,4 @@ if __name__ == '__main__':
     sessdata = userInput
     c = Comic(comicID, sessdata)
     c.fetch()
+    input("按Enter键退出...")
