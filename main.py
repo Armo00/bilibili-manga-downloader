@@ -138,7 +138,7 @@ class Episode:
             for img in images:
                 paths.append(img['path'])
             payloads = {
-                "urls": json.dumps(paths).decode()
+                "urls": json.dumps(paths)
             }
             url = "https://manga.bilibili.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web"
 
