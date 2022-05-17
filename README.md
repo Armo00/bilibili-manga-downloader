@@ -1,5 +1,6 @@
 # 这个项目已经停止更新，全部内容已经用Rust重写，见 [bilibili_comics_downloader](https://github.com/lihe07/bilibili_comics_downloader)
 
+新的Issue不会再处理
 
 # bilibili-manga-downloader
 下载哔哩哔哩漫画的爬虫， 支持范围下载， 逐话导出PDF，自动合并PDF
