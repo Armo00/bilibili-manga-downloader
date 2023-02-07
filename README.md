@@ -1,3 +1,4 @@
+# 于是这个项目被一个不会RUST的人捡过来准备复活一下 原作者 [lihe07](https://github.com/lihe07)  
 # 这个项目已经停止更新，全部内容已经用Rust重写，见 [bilibili_comics_downloader](https://github.com/lihe07/bilibili_comics_downloader)
 
 新的Issue不会再处理
